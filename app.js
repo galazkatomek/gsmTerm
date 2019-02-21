@@ -9,6 +9,7 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const temperatureRouter = require('./routes/temperature.js');
+const testRouter = require('./routes/test.js');
 
 const app = express();
 app.use(compression())
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/temperature', temperatureRouter);
+app.use('/test', testRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
