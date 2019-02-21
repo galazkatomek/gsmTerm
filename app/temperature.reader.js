@@ -1,17 +1,17 @@
 const fs = require('fs');
 const TERM_ADDRES = process.env.TERM_ADDRES
-const tConst = 't=';
+const T_CONST = 't=';
 
 /**
  * Parse data from sensor
  * @param {Sting} sensorText 
  * @returns {Number} - Temperature read in °C
  */
-const parseSensorData = (sensorText) => {	
-	if (sensorText.indexOf(tConst) < 0) {
-		return;
-	}
-    const temperatureStr = sensorText.substring(sensorText.indexOf(tConst) + 2, sensorText.length);    
+const parseSensorData = (sensorText) => {
+    if (!sensorText.includes(T_CONST)){
+        return;
+    }
+    const temperatureStr = sensorText.split(T_CONST).pop()	    
 	return ((parseInt(temperatureStr) / 1000) - 2);
 }
 
