@@ -1,4 +1,5 @@
 require('dotenv').config()
+require('./consoleSetup.js');
 const createError = require('http-errors');
 const compression = require('compression')
 
@@ -42,5 +43,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+console.log('App started !')
 
 module.exports = app;
