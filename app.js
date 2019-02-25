@@ -1,5 +1,5 @@
 require('dotenv').config()
-require('./consoleSetup.js');
+require('./console-setup');
 const createError = require('http-errors');
 const compression = require('compression')
 
@@ -9,11 +9,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const temperatureRouter = require('./routes/temperature.js');
-const testRouter = require('./routes/test.js');
+const temperatureRouter = require('./routes/temperature');
+const testRouter = require('./routes/test');
+
+const temperatureMonitoring = require('./app/temperature-monitoring');
 
 const app = express();
-app.use(compression())
+app.use(compression());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -43,6 +45,8 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-console.log('App started !')
+
+temperatureMonitoring();
+console.log('App started! mode:', process.env.NODE_ENV);
 
 module.exports = app;
