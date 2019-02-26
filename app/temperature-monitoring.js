@@ -68,7 +68,7 @@ const onSingalCheckCb = async (signal) => {
     const MAX_SINGAL = 31.0
     const signalPercentage = (parseFloat(signal) / MAX_SINGAL) * 100
     const temperature = await temperatureRead()
-    const text = `Signal: ${ signalPercentage.toFixed(2) }; ${ generateTemperatureSms(temperature) }`
+    const text = `Sygnal: ${ signalPercentage.toFixed(2) }%; ${ generateTemperatureSms(temperature) }`
 
     setTimeout(() => {
         gsm.sendSms({
