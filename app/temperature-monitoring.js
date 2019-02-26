@@ -1,20 +1,34 @@
 var moment = require('moment');
+const https = require('https');
 
 const GsmHandler = require('./gsm');
 const temperatureRead = require('./temperature-reader');
+const firestore = require('./firebase-connector');
 
 const MAIN_PHONE_NUMBER = process.env.MAIN_PHONE_NUMBER;
 const ADMIN_PHONE_NUMBER = process.env.ADMIN_PHONE_NUMBER;
+const PROJECT_NAME = process.env.PROJECT_NAME;
 
 const ALLOWED_CALL_NUMBERS = process.env.ALLOWED_CALL_NUMBERS.split(' ');
 const MIN_ALLOWED_TEMPERATURE = parseFloat(process.env.MIN_ALLOWED_TEMPERATURE);
-const TIMEOUT = 60 * 1000;
+const TIMEOUT = 60 * 2 * 1000;
 
 let gsm;
 let lastAlarmTime;
+const db = firestore();
 
 const generateTemperatureSms = (temperature) => {
     return `Temperatura: ${temperature.toFixed(2)} C`
+}
+
+const addToDatabase = (temperature) => {
+    db.collection('temperatures').add({
+        temperature,
+        timeStamp: firestore.FieldValue.serverTimestamp(),
+        project: PROJECT_NAME
+    }).catch(function (error) {
+        console.error("Error on adding: ", error);
+    });
 }
 
 const sendTemperatureSms = async (temperature, number = MAIN_PHONE_NUMBER) => {
@@ -52,6 +66,11 @@ const intervalCheck = async () => {
 
 const intervalLogger = async () => {
     const temperature = await temperatureRead()
+    try {
+        addToDatabase(temperature)
+    } catch (error) {
+        console.error('DB error', error)
+    }
 }
 
 const onIcomingCallCb = async (callerId) => {
@@ -68,7 +87,7 @@ const onSingalCheckCb = async (signal) => {
     const MAX_SINGAL = 31.0
     const signalPercentage = (parseFloat(signal) / MAX_SINGAL) * 100
     const temperature = await temperatureRead()
-    const text = `Sygnal: ${ signalPercentage.toFixed(2) }%; ${ generateTemperatureSms(temperature) }`
+    const text = `Sygnal: ${signalPercentage.toFixed(2)}%; ${generateTemperatureSms(temperature)}`
 
     setTimeout(() => {
         gsm.sendSms({
@@ -81,6 +100,7 @@ const onSingalCheckCb = async (signal) => {
 const temperatureMonitoring = () => {
     gsm = new GsmHandler(onIcomingCallCb, onSingalCheckCb);
     setInterval(intervalCheck, TIMEOUT)
+    setTimeout(intervalLogger, 0)
     setInterval(intervalLogger, TIMEOUT)
 
     console.log('Monitoring initialization, min temperature allowed:', MIN_ALLOWED_TEMPERATURE)
