@@ -12,7 +12,7 @@ const parseSensorData = (sensorText) => {
         return;
     }
     const temperatureStr = sensorText.split(T_CONST).pop()	    
-	return ((parseInt(temperatureStr) / 1000) - 2);
+	return ((parseInt(temperatureStr) / 1000) - 1);
 }
 
 /**
