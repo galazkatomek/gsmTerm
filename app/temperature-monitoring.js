@@ -15,20 +15,20 @@ const TIMEOUT = 60 * 2 * 1000;
 
 let gsm;
 let lastAlarmTime;
-const db = firestore();
+// const db = firestore();
 
 const generateTemperatureSms = (temperature) => {
     return `Temperatura: ${temperature.toFixed(2)} C`
 }
 
 const addToDatabase = (temperature) => {
-    db.collection('temperatures').add({
-        temperature,
-        timeStamp: firestore.FieldValue.serverTimestamp(),
-        project: PROJECT_NAME
-    }).catch(function (error) {
-        console.error("Error on adding: ", error);
-    });
+//     db.collection('temperatures').add({
+//         temperature,
+//         timeStamp: firestore.FieldValue.serverTimestamp(),
+//         project: PROJECT_NAME
+//     }).catch(function (error) {
+//         console.error("Error on adding: ", error);
+//     });
 }
 
 const sendTemperatureSms = async (temperature, number = MAIN_PHONE_NUMBER) => {
