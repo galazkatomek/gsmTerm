@@ -23,7 +23,7 @@ class GsmHandler {
         this.init()
     }
 
-    //M> +CLIP: "48501406222",145,,,,1
+    //M> +CLIP: "48XXXXXXXXX",145,,,,1
     async write(line) {
         this.port.write(`${line}\r\n`)
         await sleep()
