@@ -3,6 +3,7 @@ const https = require('https');
 
 const GsmHandler = require('./gsm');
 const temperatureRead = require('./temperature-reader');
+const powerReader = require('./power-reader');
 const firestore = require('./firebase-connector');
 
 const MAIN_PHONE_NUMBER = process.env.MAIN_PHONE_NUMBER;
@@ -15,6 +16,7 @@ const TIMEOUT = 2 * 60 * 1000;
 
 let gsm;
 let lastAlarmTime;
+let batteryAlarmTime;
 // const db = firestore();
 
 const generateTemperatureSms = (temperature) => {
@@ -50,7 +52,6 @@ const lowTemperatureAlarm = async (temperature) => {
         // make 20 minutes stop between alarms
         return;
     }
-
     await sendTemperatureSms(temperature)
     await makeAlarmCall()
     lastAlarmTime = moment()
@@ -62,6 +63,34 @@ const intervalCheck = async () => {
     if (temperature <= MIN_ALLOWED_TEMPERATURE) {
         await lowTemperatureAlarm();
     }
+}
+
+const intervalBatteryCheck = async () => {
+    const power = await powerReader()
+    if (power.isOnBattery || power.percent < 70) {
+        if (batteryAlarmTime && batteryAlarmTime.isAfter(moment().subtract(20, 'minutes'))) {
+            // make 20 minutes stop between alarms
+            return;
+        }
+        await sendBatterySms();
+        batteryAlarmTime = moment()
+    }
+}
+const sendBatterySms = async (powerValue, number = MAIN_PHONE_NUMBER) => {
+    const temperature = generateTemperatureSms(await temperatureRead())
+    const powerSource = powerValue.isOnBattery ? 'bateryjne' : 'sieciowe'
+    const powerString = `Zasilanie: ${powerSource}; Bateria: ${powerValue.percent.toFixed()}`;
+
+    const text = `${powerString}; ${temperature};`
+
+    await gsm.sendSms({
+        text,
+        number: ADMIN_PHONE_NUMBER
+    });
+    // await gsm.sendSms({
+    //     text,
+    //     number
+    // });
 }
 
 const intervalLogger = async () => {
@@ -100,6 +129,8 @@ const onSingalCheckCb = async (signal) => {
 const temperatureMonitoring = () => {
     gsm = new GsmHandler(onIcomingCallCb, onSingalCheckCb);
     setInterval(intervalCheck, TIMEOUT)
+    setInterval(intervalBatteryCheck, TIMEOUT)
+
     setTimeout(intervalLogger, 0)
     setInterval(intervalLogger, TIMEOUT)
 
