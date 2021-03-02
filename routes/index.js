@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
   const time = moment().format('HH:mm:ss')
   const powerValue =  dataStore.powerValue
   const powerSource = powerValue.isOnBattery ? 'bateryjne' : 'sieciowe'
-  const powerString = `Zasilanie: ${powerSource}; Bateria: ${powerValue.percent.toFixed()}`;
+  const powerString = `Zasilanie: ${powerSource}; Bateria: ${powerValue.percent.toFixed()}%`;
 
   res.render('index', {
     title: 'Termometr GSM',

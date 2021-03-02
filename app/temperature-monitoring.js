@@ -72,7 +72,7 @@ const intervalBatteryCheck = async () => {
             // make 20 minutes stop between alarms
             return;
         }
-        await sendBatterySms();
+        await sendBatterySms(power);
         batteryAlarmTime = moment()
     }
 }
