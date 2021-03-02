@@ -1,13 +1,11 @@
 const ina219 = require('ina219');
-
+ina219.init();
+ina219.enableLogging(true);
 /**
  * Read power status
  * @returns {Promise<Object>} - String with config
  */
 const powerReader = async () => {
-
-    ina219.init();
-    ina219.enableLogging(true);
     return new Promise((resolve) => {
         ina219.calibrate32V1A(function () {
             ina219.getBusVoltage_V(function (volts) {

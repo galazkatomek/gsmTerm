@@ -11,8 +11,10 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const temperatureRouter = require('./routes/temperature');
 const testRouter = require('./routes/test');
+const powerRouter = require('./routes/power');
 
 const temperatureMonitoring = require('./app/temperature-monitoring');
+const powerReader = require('./app/power-reader');
 
 const app = express();
 app.use(compression());
@@ -29,6 +31,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/temperature', temperatureRouter);
 app.use('/test', testRouter);
+app.use('/power', powerRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -47,6 +51,7 @@ app.use(function (err, req, res, next) {
 });
 
 temperatureMonitoring();
+powerReader();
 console.log('App started! mode:', process.env.NODE_ENV);
 
 module.exports = app;
