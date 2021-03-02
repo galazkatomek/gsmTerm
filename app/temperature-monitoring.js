@@ -79,7 +79,7 @@ const intervalBatteryCheck = async () => {
 const sendBatterySms = async (powerValue, number = MAIN_PHONE_NUMBER) => {
     const temperature = generateTemperatureSms(await temperatureRead())
     const powerSource = powerValue.isOnBattery ? 'bateryjne' : 'sieciowe'
-    const powerString = `Zasilanie: ${powerSource}; Bateria: ${powerValue.percent.toFixed()}`;
+    const powerString = `Zasilanie: ${powerSource}; Bateria: ${powerValue.percent.toFixed()}%`;
 
     const text = `${powerString}; ${temperature};`
 

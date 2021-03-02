@@ -54,4 +54,5 @@ temperatureMonitoring();
 powerReader();
 console.log('App started! mode:', process.env.NODE_ENV);
 
+require('./app/data-store');
 module.exports = app;

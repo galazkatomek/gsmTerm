@@ -3,7 +3,7 @@ const powerReader = require('./power-reader');
 const TIMEOUT = 10 * 1000;
 
 const store = {
-    temperature: '',
+    temperature: 50,
     powerValue: '',
 }
 
