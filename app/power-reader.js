@@ -1,5 +1,6 @@
 const ina219 = require('ina219');
-ina219.init();
+const INA219_ADDRESS = 0x42;
+ina219.init(INA219_ADDRESS);
 ina219.enableLogging(true);
 /**
  * Read power status
