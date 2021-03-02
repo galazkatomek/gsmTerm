@@ -11,7 +11,7 @@ const PROJECT_NAME = process.env.PROJECT_NAME;
 
 const ALLOWED_CALL_NUMBERS = process.env.ALLOWED_CALL_NUMBERS.split(' ');
 const MIN_ALLOWED_TEMPERATURE = parseFloat(process.env.MIN_ALLOWED_TEMPERATURE);
-const TIMEOUT = 60 * 2 * 1000;
+const TIMEOUT = 2 * 60 * 1000;
 
 let gsm;
 let lastAlarmTime;
