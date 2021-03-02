@@ -5,8 +5,8 @@ const powerReader = require('../app/power-reader');
 
 router.get('/', async (req, res, next) => {
 	const temperature = await temperatureRead();
-	const powerReader = await powerReader();
-	const text = `${powerReader}; Temperatura: ${temperature.toFixed(2)} C`
+	const powerValue = await powerReader();
+	const text = `${powerValue}; Temperatura: ${temperature.toFixed(2)} C`
 	res.send(text);
 });
 
