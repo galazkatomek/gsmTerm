@@ -25,8 +25,8 @@ const powerReader = async () => {
                 ina219.getBusVoltage_V(function (busVoltage) {
                     const percent = busVoltageToPercent(busVoltage)
                     resolve({
-                        percent,
-                        isOnBattery: current < -0.05
+                        percent: percent,
+                        isOnBattery: current < - 50
                     })
                 });
             });
