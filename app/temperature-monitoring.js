@@ -1,5 +1,4 @@
-var moment = require('moment');
-const https = require('https');
+const moment = require('moment');
 
 const GsmHandler = require('./gsm');
 const temperatureRead = require('./temperature-reader');
@@ -17,20 +16,20 @@ const TIMEOUT = 60 * 1000;
 let gsm;
 let lastAlarmTime;
 let batteryAlarmTime;
-// const db = firestore();
+const db = firestore();
 
 const generateTemperatureSms = (temperature) => {
     return `Temperatura: ${temperature.toFixed(2)} C`
 }
 
 const addToDatabase = (temperature) => {
-//     db.collection('temperatures').add({
-//         temperature,
-//         timeStamp: firestore.FieldValue.serverTimestamp(),
-//         project: PROJECT_NAME
-//     }).catch(function (error) {
-//         console.error("Error on adding: ", error);
-//     });
+    db.collection('temperatures2021').add({
+        temperature,
+        timeStamp: firestore.FieldValue.serverTimestamp(),
+        project: PROJECT_NAME
+    }).catch(function (error) {
+        console.error("Error on adding: ", error);
+    });
 }
 
 const sendTemperatureSms = async (temperature, number = MAIN_PHONE_NUMBER) => {
