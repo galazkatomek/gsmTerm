@@ -21,11 +21,11 @@ const powerReader = async () => {
     return new Promise((resolve) => {
         ina219.calibrate32V2A(function () {
             ina219.getCurrent_mA(function (current) {
-                console.log('[ina219] Current (mA): ', current);
                 ina219.getBusVoltage_V(function (busVoltage) {
                     const percent = busVoltageToPercent(busVoltage)
                     resolve({
-                        percent: current,
+                        current,
+                        percent,
                         isOnBattery: current < - 50
                     })
                 });

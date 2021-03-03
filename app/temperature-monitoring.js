@@ -12,7 +12,7 @@ const PROJECT_NAME = process.env.PROJECT_NAME;
 
 const ALLOWED_CALL_NUMBERS = process.env.ALLOWED_CALL_NUMBERS.split(' ');
 const MIN_ALLOWED_TEMPERATURE = parseFloat(process.env.MIN_ALLOWED_TEMPERATURE);
-const TIMEOUT = 2 * 60 * 1000;
+const TIMEOUT = 60 * 1000;
 
 let gsm;
 let lastAlarmTime;
@@ -67,7 +67,7 @@ const intervalCheck = async () => {
 
 const intervalBatteryCheck = async () => {
     const power = await powerReader()
-    if (power.isOnBattery || power.percent < 70) {
+    if (power.isOnBattery) {
         if (batteryAlarmTime && batteryAlarmTime.isAfter(moment().subtract(20, 'minutes'))) {
             // make 20 minutes stop between alarms
             return;
@@ -87,10 +87,10 @@ const sendBatterySms = async (powerValue, number = MAIN_PHONE_NUMBER) => {
         text,
         number: ADMIN_PHONE_NUMBER
     });
-    // await gsm.sendSms({
-    //     text,
-    //     number
-    // });
+    await gsm.sendSms({
+        text,
+        number
+    });
 }
 
 const intervalLogger = async () => {
