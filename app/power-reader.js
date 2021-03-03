@@ -26,7 +26,7 @@ const powerReader = async () => {
                     const percent = busVoltageToPercent(busVoltage)
                     resolve({
                         percent,
-                        isOnBattery: current < 0
+                        isOnBattery: current < -0.05
                     })
                 });
             });
