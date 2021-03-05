@@ -1,7 +1,7 @@
 const ina219 = require('ina219');
 const INA219_ADDRESS = 0x42;
 ina219.init(INA219_ADDRESS);
-ina219.enableLogging(true);
+ina219.enableLogging(false);
 
 const busVoltageToPercent = (busVoltage) => {
     const percentBase = (busVoltage - 6) / 2.4 * 100;
@@ -26,13 +26,12 @@ const powerReader = async () => {
                     resolve({
                         current,
                         percent,
-                        isOnBattery: current < - 50
+                        isOnBattery: current < -80
                     })
                 });
             });
         });
     });
-
 }
 
 module.exports = powerReader
