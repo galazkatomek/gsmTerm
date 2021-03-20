@@ -60,7 +60,11 @@ const lowTemperatureAlarm = async (temperature) => {
 const intervalCheck = async () => {
     const temperature = await temperatureRead()
     if (temperature <= MIN_ALLOWED_TEMPERATURE) {
-        await lowTemperatureAlarm();
+        const temperature1 = await temperatureRead()
+        const temperature2 = await temperatureRead()
+        if (temperature1 <= MIN_ALLOWED_TEMPERATURE && temperature2 <= MIN_ALLOWED_TEMPERATURE) {
+            await lowTemperatureAlarm();
+        }
     }
 }
 
