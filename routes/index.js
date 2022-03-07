@@ -1,6 +1,6 @@
-var express = require('express');
-var moment = require('moment');
-var router = express.Router();
+const express = require('express');
+const moment = require('moment');
+const router = express.Router();
 
 const dataStore = require('../app/data-store');
 
