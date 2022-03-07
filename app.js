@@ -2,6 +2,7 @@ require('dotenv').config()
 require('./console-setup');
 const createError = require('http-errors');
 const compression = require('compression')
+const nocache = require('nocache');
 
 const express = require('express');
 const path = require('path');
@@ -38,6 +39,8 @@ app.use('/power', powerRouter);
 app.use(function (req, res, next) {
   next(createError(404));
 });
+
+app.use(nocache());
 
 // error handler
 app.use(function (err, req, res, next) {

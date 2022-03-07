@@ -7,22 +7,23 @@
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
-    "compression": "^1.7.3",
-    "console-stamp": "^0.2.7",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "dotenv": "^6.2.0",
-    "express": "~4.16.0",
-    "firebase": "^5.8.4",
-    "firebase-admin": "^7.0.0",
-    "hbs": "~4.0.1",
-    "http-errors": "~1.6.2",
+    "compression": "^1.7.4",
+    "console-stamp": "^3.0.4",
+    "cookie-parser": "~1.4.6",
+    "debug": "~4.3.3",
+    "dotenv": "^16.0.0",
+    "express": "~4.17.3",
+    "firebase": "^8.10.1",
+    "firebase-admin": "^10.0.2",
+    "hbs": "~4.2.0",
+    "http-errors": "~2.0.0",
     "ina219": "^0.6.2",
-    "moment": "^2.24.0",
-    "morgan": "~1.9.0",
-    "serialport": "^7.1.4"
+    "moment": "^2.29.1",
+    "morgan": "~1.10.0",
+    "nocache": "^3.0.1",
+    "serialport": "^10.4.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "nodemon": "^2.0.15"
   }
 }
