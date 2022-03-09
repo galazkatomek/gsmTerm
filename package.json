@@ -17,13 +17,12 @@
     "firebase-admin": "^10.0.2",
     "hbs": "~4.2.0",
     "http-errors": "~2.0.0",
-    "ina219": "^0.6.2",
-    "i2c-bus": "^1.1.1",
+    "ina219": "file:../node-ina219",
+    "i2c-bus": "file:../i2c-bus",
     "moment": "^2.29.1",
     "morgan": "~1.10.0",
     "nocache": "^3.0.1",
-    "serialport": "^9.2.8",
-    "node-gyp": "^9.0.0"
+    "serialport": "^9.2.8"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
