@@ -22,7 +22,8 @@
     "moment": "^2.29.1",
     "morgan": "~1.10.0",
     "nocache": "^3.0.1",
-    "serialport": "^9.2.8"
+    "serialport": "^9.2.8",
+    "node-gyp": "^9.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
