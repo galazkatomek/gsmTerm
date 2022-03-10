@@ -27,6 +27,7 @@
     "@firebase/app-compat" : "^0.1.19"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "nan": "^2.15.0"
   }
 }
