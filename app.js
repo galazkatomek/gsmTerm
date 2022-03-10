@@ -9,13 +9,13 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
-const temperatureRouter = require('./routes/temperature');
+// const indexRouter = require('./routes/index');
+// const temperatureRouter = require('./routes/temperature');
 const testRouter = require('./routes/test');
-const powerRouter = require('./routes/power');
+// const powerRouter = require('./routes/power');
 
-const temperatureMonitoring = require('./app/temperature-monitoring');
-const powerReader = require('./app/power-reader');
+// const temperatureMonitoring = require('./app/temperature-monitoring');
+// const powerReader = require('./app/power-reader');
 
 const app = express();
 app.use(compression());
@@ -29,10 +29,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/temperature', temperatureRouter);
+app.use('/', testRouter);
+// app.use('/temperature', temperatureRouter);
 app.use('/test', testRouter);
-app.use('/power', powerRouter);
+// app.use('/power', powerRouter);
 
 
 // catch 404 and forward to error handler
@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.use(nocache());
+// app.use(nocache());
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -56,6 +56,6 @@ app.use(function (err, req, res, next) {
 // temperatureMonitoring();
 // powerReader();
 console.log('App started! mode:', process.env.NODE_ENV);
-
+console.log('app', app)
 // require('./app/data-store');
 module.exports = app;
